@@ -1,0 +1,31 @@
+Kyle Johnson
+9/17/18 - 5:30 PM
+ETCO 2601-51
+Professor Kosan
+3.1)
+a) Relation - A table of information that is made up of attributes and domains.
+b) Attribute - A distinct characteristic of the relation presented as the column.
+c) Domain - The values that are permissable in regards to an attribute.
+d) Tuple - A row of information in the table that is logically structured.
+e) Intension - The structure and concept of a relation (all of ___ have this
+this characteristic so it must be _____).
+   Extension - The tuples in a relation that change over time (design). 
+f) Degree - The number of columns / attributes / characteristics a relation has.
+   Cardinality - The number of rows / tuples / entries a relation has.
+
+3.2) A candidate key is a minimal super key that identifies all tuples as unique 
+independent rows while the primary key is the candidate key that is picked for
+a particular data point.
+
+A foreign key is a key that connects two attributes that are the same in 
+two different relations. This is different than a candidate key as a candidate key
+is an entire tuple of data.
+
+An example of a foreign key would be the name of a professor and the class being
+taught. 
+
+An example of a candidate key would be the name of a professor, the class being
+taught, the time the class is being taught, the days being taught, the 
+pre-requisite for the class, building name, and the room number.
+An example of the primary key would be Professor Kosan, ETCO 2601-51, 5:30 PM, 
+Monday, ETCO 1120, ATC, 110.

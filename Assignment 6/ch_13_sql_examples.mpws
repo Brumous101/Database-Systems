@@ -1,0 +1,927 @@
+Chapter 13 examples.
+v.06
+
+NOTE:Names such as "count" and "sum" are reserved words, so "count_" and "sum_"
+are used instead.
+
+
+Command to shut down the database.
+%sql,title="shutdown",input="dreamhome"
+shutdown;
+%/sql
+
+    %output,mpversion=".241",preserve="false"
+      Disconnected from JDBC Data Source
+.   %/output
+
+
+
+Example 13.1 p.391 Retrieve all columns, all rows (without wildcard).
+
+List all details of all staff.
+%sql,input="dreamhome"
+
+select sno, fname, lname, address, tel_no, position, sex, dob, salary, nin, bno
+from staff;
+
+%/sql
+
+    %output,sequence="2",timestamp="2015-10-12 17:54:33.535",preserve="false"
+      SNO   FNAME  LNAME  ADDRESS                            TEL_NO         POSITION   SEX  DOB        SALARY  NIN        BNO
+      ----  -----  -----  ---------------------------------  -------------  ---------  ---  ---------  ------  ---------  ---
+      SA9   Mary   Howe   2 Elm Pl, Aberdeen AB2 3SU          N/A           Assistant  F    19-Feb-70    9000  WM532187D  B7
+      SG14  David  Ford   63 Ashby St, Patrick, Glasgow G11  0141-339-2177  Deputy     M    24-Mar-58   18000  WL220658D  B3
+      SG37  Ann    Beach  81 George St, Glasgow PA1 2JR      0141-848-3345  Snr Asst   F    10-Nov-60   12000  WL432514C  B3
+      SG5   Susan  Brand  5 Gt Western Rd, Glasgow G12       0141-334-2001  Manager    F    3-Jun-40    24000  WK588932E  B3
+      SL21  John   White  19 Taylor St, Cranford,London      0171-884-5112  Manager    M    1-Oct-45    30000  WK442011B  B5
+      SL41  Julie  Lee    28 Malvern St, Kilburn NW2         0181-554-3541  Assistant  F    13-Jun-65    9000  WA290573K  B5
+      Fetched 6 rows.
+.   %/output
+
+
+Example 13.1 p.391 Retrieve all colums, all rows (with wildcard).
+
+List all details of all staff.
+%sql,input="dreamhome"
+
+select *
+from staff;
+
+%/sql
+
+    %output,sequence="3",timestamp="2015-10-12 17:54:58.556",preserve="false"
+      SNO   FNAME  LNAME  ADDRESS                            TEL_NO         POSITION   SEX  DOB        SALARY  NIN        BNO
+      ----  -----  -----  ---------------------------------  -------------  ---------  ---  ---------  ------  ---------  ---
+      SA9   Mary   Howe   2 Elm Pl, Aberdeen AB2 3SU          N/A           Assistant  F    19-Feb-70    9000  WM532187D  B7
+      SG14  David  Ford   63 Ashby St, Patrick, Glasgow G11  0141-339-2177  Deputy     M    24-Mar-58   18000  WL220658D  B3
+      SG37  Ann    Beach  81 George St, Glasgow PA1 2JR      0141-848-3345  Snr Asst   F    10-Nov-60   12000  WL432514C  B3
+      SG5   Susan  Brand  5 Gt Western Rd, Glasgow G12       0141-334-2001  Manager    F    3-Jun-40    24000  WK588932E  B3
+      SL21  John   White  19 Taylor St, Cranford,London      0171-884-5112  Manager    M    1-Oct-45    30000  WK442011B  B5
+      SL41  Julie  Lee    28 Malvern St, Kilburn NW2         0181-554-3541  Assistant  F    13-Jun-65    9000  WA290573K  B5
+      Fetched 6 rows.
+.   %/output
+
+
+
+Example 13.2 p.391 Retrieve specific columns, all rows.
+
+Produce a list of salaries for all staff, showing only the staff number, Sno,
+the first and last names, and the salary details.
+%sql,input="dreamhome"
+
+select sno, fname, lname, salary
+from staff;
+
+%/sql
+
+    %output,sequence="4",timestamp="2015-10-12 17:55:15.405",preserve="false"
+      SNO   FNAME  LNAME  SALARY
+      ----  -----  -----  ------
+      SA9   Mary   Howe     9000
+      SG14  David  Ford    18000
+      SG37  Ann    Beach   12000
+      SG5   Susan  Brand   24000
+      SL21  John   White   30000
+      SL41  Julie  Lee      9000
+      Fetched 6 rows.
+.   %/output
+
+
+
+
+Example 13.3 p.392 Use of distinct (without distinct).
+
+List the property numbers of all properties that have been viewed.
+
+%sql,input="dreamhome"
+
+select pno
+from viewing;
+
+%/sql
+
+    %output,sequence="5",timestamp="2015-10-12 17:55:39.629",preserve="false"
+      PA14
+      PG36
+      PG4
+      PA14
+      PG4
+      Fetched 5 rows.
+.   %/output
+
+
+
+Example 13.3 p.392 Use of distinct (with distinct).
+
+List the property numbers of all properties that have been viewed.
+
+%sql,input="dreamhome"
+
+select distinct pno
+from viewing;
+
+%/sql
+
+    %output,sequence="6",timestamp="2015-10-12 17:55:57.832",preserve="false"
+            PA14
+            PG36
+            PG4
+            Fetched 3 rows.
+.   %/output
+
+
+
+
+Example 13.4 p.393 Calculated fields (without AS).
+
+Product a list of monthly salaries for all staff, showing the staff number, 
+the first and last names, and the salary details.
+%sql,input="dreamhome"
+
+select sno, fname, lname, salary/12
+from staff;
+
+%/sql
+
+    %output,sequence="7",timestamp="2015-10-12 17:56:12.627",preserve="false"
+      SNO   FNAME  LNAME    C4
+      ----  -----  -----  ----
+      SA9   Mary   Howe    750
+      SG14  David  Ford   1500
+      SG37  Ann    Beach  1000
+      SG5   Susan  Brand  2000
+      SL21  John   White  2500
+      SL41  Julie  Lee     750
+      Fetched 6 rows.
+.   %/output
+
+
+
+
+Example 13.4 p.393 Calculated fields (with AS).
+
+Product a list of monthly salaries for all staff, showing the staff number, 
+the first and last names, and the salary details.
+%sql,input="dreamhome"
+
+select sno, fname, lname, salary/12 AS monthly_salary
+from staff;
+
+%/sql
+
+    %output,sequence="8",timestamp="2015-10-12 17:56:35.325",preserve="false"
+            SNO   FNAME  LNAME  MONTHLY_SALARY
+            ----  -----  -----  --------------
+            SA9   Mary   Howe              750
+            SG14  David  Ford             1500
+            SG37  Ann    Beach            1000
+            SG5   Susan  Brand            2000
+            SL21  John   White            2500
+            SL41  Julie  Lee               750
+            Fetched 6 rows.
+.   %/output
+
+
+
+Example 13.5 p.394 Comparison search condition.
+
+
+List all staff with a salary greater than 10,000.
+%sql,input="dreamhome"
+
+select sno, fname, lname, position, salary
+from staff
+where salary > 10000;
+
+%/sql
+
+    %output,sequence="10",timestamp="2015-10-12 17:57:28.348",preserve="false"
+            SNO   FNAME  LNAME  POSITION  SALARY
+            ----  -----  -----  --------  ------
+            SG14  David  Ford   Deputy     18000
+            SG37  Ann    Beach  Snr Asst   12000
+            SG5   Susan  Brand  Manager    24000
+            SL21  John   White  Manager    30000
+            Fetched 4 rows.
+.   %/output
+
+
+
+
+Example 13.6 p.395 Compound comparison search condition.
+
+List the addresses of all branch offices in London or Glasgow.
+%sql,input="dreamhome"
+
+select bno, street, area, city, pcode
+from branch
+where city = 'London' OR city = 'Glasgow';
+
+%/sql
+
+    %output,sequence="13",timestamp="2015-10-12 18:00:28.648",preserve="false"
+      BNO  STREET        AREA     CITY     PCODE
+      ---  ------------  -------  -------  --------
+      B2   56 Clover Dr           London   NW10 6EU
+      B3   163 Main St   Partick  Glasgow  G11 9QX
+      B5   22 Deer Rd    Sidcup   London   SW1 4EH
+      Fetched 3 rows.
+.   %/output
+
+
+
+Example 13.7 p.95 Range search condition (BETWEEN/NOT BETWEEN).
+
+List all staff with a salary between 20,000 and 30,000.
+%sql,input="dreamhome"
+
+select sno, fname, lname, position, salary
+from staff
+where salary between 20000 AND 30000;
+
+%/sql
+
+    %output,sequence="14",timestamp="2015-10-12 18:00:49.589",preserve="false"
+      SNO   FNAME  LNAME  POSITION  SALARY
+      ----  -----  -----  --------  ------
+      SG5   Susan  Brand  Manager    24000
+      SL21  John   White  Manager    30000
+      Fetched 2 rows.
+.   %/output
+
+
+
+Example 13.8 p.396 Set membership search condition (IN/NOT IN).
+
+List all Managers and Deputy Managers.
+%sql,input="dreamhome"
+
+select sno, fname, lname, position
+from staff
+where position IN ('Manager', 'Deputy');
+
+%/sql
+
+    %output,sequence="15",timestamp="2015-10-12 18:01:03.715",preserve="false"
+      SNO   FNAME  LNAME  POSITION
+      ----  -----  -----  --------
+      SG14  David  Ford   Deputy
+      SG5   Susan  Brand  Manager
+      SL21  John   White  Manager
+      Fetched 3 rows.
+.   %/output
+
+
+
+Example 13.9 p.397 Pattern match search condition (LIKE/NOT LIKE).
+
+Find all staff with the string 'Glasgow' in thier address.
+%sql,input="dreamhome"
+
+select sno, fname, lname, address, salary
+from staff
+where address like '%Glasgow%';
+
+%/sql
+
+
+
+Example 13.10 NULL search condition (IS NULL/IS NOT NULL)
+
+List the details of all viewings on property PG4 where a comment has not
+been supplied.
+
+NOTE:Is not working with hsqldb.
+%sql,input="dreamhome"
+
+select rno, date
+from viewing
+where pno='PG4' AND comment IS NULL;
+
+%/sql
+
+
+
+
+Example 13.11 p.399 Single column ordering.
+
+Produce a list of salaries for all staff, arranged in descending order of salary.
+%sql,input="dreamhome"
+
+Select sno, fname, lname, salary
+from staff
+order by salary desc;
+
+%/sql
+
+    %output,sequence="16",timestamp="2015-10-12 18:01:45.045",preserve="false"
+            SNO   FNAME  LNAME  SALARY
+            ----  -----  -----  ------
+            SL21  John   White   30000
+            SG5   Susan  Brand   24000
+            SG14  David  Ford    18000
+            SG37  Ann    Beach   12000
+            SA9   Mary   Howe     9000
+            SL41  Julie  Lee      9000
+            Fetched 6 rows.
+.   %/output
+
+
+
+Example 13.12 Multiple column ordering (without minor order).
+
+Produce an abbreviated list of properties arranged in order of property type.
+%sql,input="dreamhome"
+
+select pno, type, rooms, rent
+from property_for_rent
+order by type;
+
+%/sql
+
+    %output,sequence="17",timestamp="2015-10-12 18:02:13.24",preserve="false"
+            PNO   TYPE   ROOMS  RENT
+            ----  -----  -----  ----
+            PG16  Flat       4   450
+            PG36  Flat       3   375
+            PG4   Flat       3   350
+            PL94  Flat       4   400
+            PA14  House      6   650
+            PG21  House      5   600
+            Fetched 6 rows.
+.   %/output
+
+
+
+
+Example 13.12 Multiple column ordering (with minor order).
+
+Produce an abbreviated list of properties arranged in order of property type.
+%sql,input="dreamhome"
+
+select pno, type, rooms, rent
+from property_for_rent
+order by type, rent DESC;
+
+%/sql
+
+    %output,sequence="18",timestamp="2015-10-12 18:02:41.569",preserve="false"
+      PNO   TYPE   ROOMS  RENT
+      ----  -----  -----  ----
+      PG16  Flat       4   450
+      PL94  Flat       4   400
+      PG36  Flat       3   375
+      PG4   Flat       3   350
+      PA14  House      6   650
+      PG21  House      5   600
+      Fetched 6 rows.
+.   %/output
+
+
+
+Example 13.13 p.402 Use of COUNT(*).
+
+How many properties cost more than 350 per month to rent?
+%sql,input="dreamhome"
+
+select COUNT(*) AS count_
+from property_for_rent
+where rent > 350;
+
+%/sql
+
+    %output,sequence="19",timestamp="2015-10-12 18:04:15.819",preserve="false"
+      5
+.   %/output
+
+
+
+Example 13.14 p.402 Use of COUNT(DISTINCT).
+
+How many different properties were viewed in May 1998?
+
+%sql,input="dreamhome"
+
+select COUNT(distinct pno) AS count_
+from viewing
+where date between '1-May-98' AND '31-May-98';
+
+%/sql
+
+    %output,sequence="20",timestamp="2015-10-12 18:04:33.02",preserve="false"
+      3
+.   %/output
+
+
+
+Example 13.15 p.402 Use of COUNT and SUM.
+
+Find the total number of Managers and the sum of their salaries.
+%sql,input="dreamhome"
+
+select COUNT(sno) AS count_, SUM(salary) AS sum_
+from staff
+where position = 'Manager';
+
+%/sql
+
+    %output,sequence="21",timestamp="2015-10-12 18:06:00.437",preserve="false"
+      COUNT_   SUM_
+      ------  -----
+           2  54000
+.   %/output
+
+
+
+Example 13.16 p.402 Use of MIN, MAX, AVG.
+
+Find the minimum, maximum, and average staff salary.
+%sql,input="dreamhome"
+
+select MIN(salary) as min_, MAX(salary) AS max_, AVG(salary) AS avg_
+from staff;
+
+%/sql
+
+    %output,sequence="22",timestamp="2015-10-12 18:06:49.323",preserve="false"
+      MIN_   MAX_   AVG_
+      ----  -----  -----
+      9000  30000  17000
+.   %/output
+
+
+
+Example 13.17 p. 403 Use of GROUP BY
+
+Find the number of staff working in each branch and the sum of their salaries.
+%sql,input="dreamhome"
+
+Select bno, COUNT(sno) AS count_, SUM(salary) as sum_
+from staff
+GROUP BY bno
+ORDER BY bno;
+
+%/sql
+
+    %output,sequence="23",timestamp="2015-10-12 18:07:54.812",preserve="false"
+      BNO  COUNT_   SUM_
+      ---  ------  -----
+      B3        3  54000
+      B5        2  39000
+      B7        1   9000
+      Fetched 3 rows.
+.   %/output
+
+
+
+Example 13.18 p.405 Use of HAVING.
+
+For each branch office with more than one member of staff,
+find the number of staff working in each branch and
+the sum of their salaries.
+%sql,input="dreamhome"
+
+select bno, COUNT(sno) AS count_, SUM(salary) AS sum_
+from staff
+GROUP BY bno
+HAVING COUNT(sno) > 1
+ORDER BY bno;
+
+%/sql
+
+    %output,sequence="24",timestamp="2015-10-12 18:09:40.428",preserve="false"
+      BNO  COUNT_   SUM_
+      ---  ------  -----
+      B3        3  54000
+      B5        2  39000
+      Fetched 2 rows.
+.   %/output
+
+
+
+       
+            
+
+Example 13.19 p.406 Using a subquery with equality.
+
+List the staff who work in the branch at '163 Main St.'.
+
+Note: Missing periods at end of street names.
+
+%sql,input="dreamhome"
+
+select sno, fname, lname, position
+from staff
+where bno =
+        (select bno
+        from branch
+        where street = '163 Main St');
+
+%/sql
+
+    %output,sequence="26",timestamp="2015-10-12 18:11:57.465",preserve="false"
+      SNO   FNAME  LNAME  POSITION
+      ----  -----  -----  --------
+      SG14  David  Ford   Deputy
+      SG37  Ann    Beach  Snr Asst
+      SG5   Susan  Brand  Manager
+      Fetched 3 rows.
+.   %/output
+
+
+
+%sql,title="",input="dreamhome"
+
+(select bno
+        from branch
+        where street = '163 Main St');
+
+%/sql
+
+    %output,sequence="25",timestamp="2015-10-12 18:11:12.224",preserve="false"
+            B3
+.   %/output
+
+
+
+
+Example 13.20 p.407 Using a subquery with an aggregate function.
+
+List all staff whose salary is greater than the average salary, and list by how
+much their salary is greater than the average.
+%sql,input="dreamhome"
+
+select sno, fname, lname, position, salary - (select avg(salary) from staff) AS sal_diff
+from staff
+where salary >
+                (select avg(salary)
+                from staff);
+
+%/sql
+
+    %output,sequence="27",timestamp="2015-10-12 18:14:13.429",preserve="false"
+      SNO   FNAME  LNAME  POSITION  SAL_DIFF
+      ----  -----  -----  --------  --------
+      SG14  David  Ford   Deputy        1000
+      SG5   Susan  Brand  Manager       7000
+      SL21  John   White  Manager      13000
+      Fetched 3 rows.
+.   %/output
+
+
+
+Example 13.21 p.408 Nested subqueries; use of IN.
+
+List the properties that are handled by staff who work in the branch as '163
+Main St'.
+%sql,input="dreamhome"
+
+select pno, street, area, city, pcode,   rooms, rent
+from property_for_rent
+where sno IN
+            (select sno
+            from staff
+            where bno =
+                        (select bno
+                        from branch
+                        where street = '163 Main St'));
+
+%/sql
+
+    %output,sequence="28",timestamp="2015-10-12 18:14:52.984",preserve="false"
+      PNO   STREET         AREA      CITY     PCODE    ROOMS  RENT
+      ----  -------------  --------  -------  -------  -----  ----
+      PG16  5 Novar Dr     Hyndland  Glasgow  G12 9AX      4   450
+      PG21  18 Dale Rd     Hyndland  Glasgow  G12          5   600
+      PG36  2 Manor Rd     NA        Glasgow  G32 4QX      3   375
+      PG4   6 Lawrence St  Patrick   Glasgow  G11 9QX      3   350
+      Fetched 4 rows.
+.   %/output
+
+
+
+Example 13.22 p.409 Use of ANY/SOME.
+
+Find staff whose salary is larger than the salary of at least one member
+of staff at branch B3;
+%sql,input="dreamhome"
+
+select sno, fname, lname, position, salary
+from staff
+where salary > SOME
+        (select salary
+        from staff
+        where bno = 'B3');
+
+%/sql
+
+    %output,sequence="29",timestamp="2015-10-12 18:15:19.463",preserve="false"
+            SNO   FNAME  LNAME  POSITION  SALARY
+            ----  -----  -----  --------  ------
+            SG14  David  Ford   Deputy     18000
+            SG5   Susan  Brand  Manager    24000
+            SL21  John   White  Manager    30000
+            Fetched 3 rows.
+.   %/output
+
+
+
+Example 13.23 p.410 Use of ALL.
+
+Find staff whose salary is larger than the salary of every member of staff
+at branch B3.
+%sql,input="dreamhome"
+
+select sno, fname, lname, position, salary
+from staff
+where salary > ALL
+        (select salary
+        from staff
+        where bno = 'B3');
+
+%/sql
+
+    %output,sequence="30",timestamp="2015-10-12 18:15:49.88",preserve="false"
+      SNO   FNAME  LNAME  POSITION  SALARY
+      ----  -----  -----  --------  ------
+      SL21  John   White  Manager    30000
+.   %/output
+
+
+
+Example 13.24 p.411 Simple join.
+
+List the names of all renters who have viewed a property along with any comment
+supplied.
+%sql,input="dreamhome"
+
+select r.rno, fname, lname, pno, comment
+from renter r, viewing v
+where r.rno = v.rno;
+
+%/sql
+
+    %output,sequence="31",timestamp="2015-10-12 18:16:55.525",preserve="false"
+      RNO   FNAME  LNAME    PNO   COMMENT
+      ----  -----  -------  ----  --------------
+      CR56  Aline  Stewart  PA14  too small
+      CR56  Aline  Stewart  PG36  NULL
+      CR56  Aline  Stewart  PG4   NULL
+      CR62  Mary   Tregar   PA14  no dining room
+      CR76  John   Kay      PG4   too remote
+      Fetched 5 rows.
+.   %/output
+
+
+
+Example 13.25 p.412 Sorting a join.
+
+For each branch office, list the names of staff who manage properties,
+and the properties they manage.
+%sql,input="dreamhome"
+
+/* Without ordering. */
+select s.bno, s.sno, fname, lname, pno
+from staff s, property_for_rent p
+where s.sno = p.sno;
+
+/* With ordering. */
+select s.bno, s.sno, fname, lname, pno
+from staff s, property_for_rent p
+where s.sno = p.sno
+ORDER BY s.bno, s.sno, pno;
+
+%/sql
+
+    %output,sequence="33",timestamp="2015-10-12 18:19:27.613",preserve="false"
+      BNO  SNO   FNAME  LNAME  PNO
+      ---  ----  -----  -----  ----
+      B3   SG14  David  Ford   PG16
+      B3   SG14  David  Ford   PG4
+      B3   SG37  Ann    Beach  PG21
+      B3   SG37  Ann    Beach  PG36
+      B5   SL41  Julie  Lee    PA14
+      B5   SL41  Julie  Lee    PL94
+      Fetched 6 rows.
+.   %/output
+
+
+
+Example 13.26 p.413 Three-table join.
+
+For each branch, list the staff who manage properties, including the city
+in which the branch is located and the properties they manage.
+
+Note:Aberdeen not showing up.
+%sql,input="dreamhome"
+
+select b.bno, b.city, s.sno, fname, lname, pno
+from branch b, staff s, property_for_rent p
+where b.bno = s.bno AND s.sno = p.sno
+ORDER BY b.bno, s.sno, pno;
+
+%/sql
+
+    %output,sequence="34",timestamp="2015-10-12 18:20:14.626",preserve="false"
+            BNO  CITY     SNO   FNAME  LNAME  PNO
+            ---  -------  ----  -----  -----  ----
+            B3   Glasgow  SG14  David  Ford   PG16
+            B3   Glasgow  SG14  David  Ford   PG4
+            B3   Glasgow  SG37  Ann    Beach  PG21
+            B3   Glasgow  SG37  Ann    Beach  PG36
+            B5   London   SL41  Julie  Lee    PA14
+            B5   London   SL41  Julie  Lee    PL94
+            Fetched 6 rows.
+.   %/output
+
+
+
+Example 13.27 p.414 Multiple grouping columns.
+
+Find the number of properties handled by each staff member.
+
+Note: Missing in output B7.
+%sql,input="dreamhome"
+
+select s.bno, s.sno, COUNT(*) AS count_
+from staff s, property_for_rent p
+where s.sno = p.sno
+group by s.bno, s.sno
+order by s.bno, s.sno;
+
+%/sql
+
+    %output,sequence="35",timestamp="2015-10-12 18:20:39.1",preserve="false"
+      BNO  SNO   COUNT_
+      ---  ----  ------
+      B3   SG14       2
+      B3   SG37       2
+      B5   SL41       2
+      Fetched 3 rows.
+.   %/output
+
+
+
+
+
+================= The following examples create additional tables and use them.
+
+%sql,title="For examples 13.28-13.30",input="dreamhome"
+
+CREATE TABLE branch1 (bno VARCHAR(2) PRIMARY KEY, bcity VARCHAR(30) NOT NULL);
+CREATE TABLE property_for_rent1 (pno VARCHAR(4) PRIMARY KEY, pcity VARCHAR(30) NOT NULL);
+
+INSERT INTO branch1 VALUES ('B3', 'Glasgow');
+INSERT INTO branch1 VALUES ('B4', 'Bristol');
+INSERT INTO branch1 VALUES ('B2', 'London');
+
+INSERT INTO property_for_rent1 VALUES ('PA14', 'Aberdeen');
+INSERT INTO property_for_rent1 VALUES ('PL94', 'London');
+INSERT INTO property_for_rent1 VALUES ('PG4', 'Glasgow');
+%/sql
+
+    %output,sequence="37",timestamp="2015-10-12 18:22:56.904",preserve="false"
+      1 row updated.
+      1 row updated.
+      1 row updated.
+      1 row updated.
+      1 row updated.
+      1 row updated.
+.   %/output
+
+Example 13.28 p.416 Left outer join.
+
+
+List the branch offices and properties that are in the same city
+along with any unmatched branches.
+%sql,input="dreamhome"
+
+select b.*, p.*
+from branch1 b
+LEFT JOIN property_for_rent1 p ON b.bcity = p.pcity;
+
+%/sql
+
+    %output,sequence="41",timestamp="2015-10-12 18:23:36.55",preserve="false"
+      BNO  BCITY    PNO     PCITY
+      ---  -------  ------  -------
+      B2   London   PL94    London
+      B3   Glasgow  PG4     Glasgow
+      B4   Bristol  [null]  [null]
+      Fetched 3 rows.
+.   %/output
+
+
+
+Example 13.29 p.416 Right outer join.
+
+List the branch offices and properties in the same city and any umatched
+properties.
+%sql,input="dreamhome"
+
+select b.*, p.*
+from branch1 b right join property_for_rent1 p ON b.bcity= p.pcity;
+
+%/sql
+
+    %output,sequence="42",timestamp="2015-10-12 18:24:03.111",preserve="false"
+      BNO     BCITY    PNO   PCITY
+      ------  -------  ----  --------
+      B2      London   PL94  London
+      B3      Glasgow  PG4   Glasgow
+      [null]  [null]   PA14  Aberdeen
+      Fetched 3 rows.
+.   %/output
+
+
+
+Example 13.30 p.417 Full outer join.
+%sql,input="dreamhome"
+
+select b.*, p.*
+from branch1 b FULL JOIN property_for_rent1 p ON b.bcity = p.pcity;
+
+%/sql
+
+    %output,sequence="43",timestamp="2015-10-12 18:24:19.578",preserve="false"
+      BNO     BCITY    PNO     PCITY
+      ------  -------  ------  --------
+      B2      London   PL94    London
+      B3      Glasgow  PG4     Glasgow
+      B4      Bristol  [null]  [null]
+      [null]  [null]   PA14    Aberdeen
+      Fetched 4 rows.
+.   %/output
+
+
+
+Example 13.31 p.418 Query using EXISTS.
+
+Find all staff who work in a London branch.
+%sql,input="dreamhome"
+
+select sno, fname, lname, position
+from staff s
+where EXISTS
+            (select *
+            from branch b
+            where s.bno = b.bno AND city = 'London');
+
+%/sql
+
+    %output,sequence="44",timestamp="2015-10-12 18:26:15.044",preserve="false"
+      SNO   FNAME  LNAME  POSITION
+      ----  -----  -----  ---------
+      SL21  John   White  Manager
+      SL41  Julie  Lee    Assistant
+      Fetched 2 rows.
+.   %/output
+
+
+
+
+
+
+================ Hotel Example
+list all details of all rooms at Grosvenor including name 
+of guest in room if occupied
+%sql,title="13.18",input="HOTEL"
+select r.*,occName
+from room r Left Join
+(select g.guest_no,g.name as occName,b.room_no as roomnum
+from booking b Left Join guest g on g.guest_no=b.guest_no
+where b.hotel_no=
+    (select hotel_no
+    from hotel
+    where name='Grosvenor')
+and current_date between date_from and date_to)
+on r.room_no=roomnum
+Where r.hotel_no=
+    (select hotel_no
+    from hotel
+    where name='Grosvenor');
+%/sql
+
+    %output,sequence="4",timestamp="2013-10-07 16:53:29.897",preserve="true"
+            ROOM_NO  HOTEL_NO  TYPE    PRICE  OCCNAME
+
+            -------  --------  ------  -----  -------
+
+                121         7  double  50.00  [null]
+
+                122         7  family  40.00  [null]
+
+                123         7  double  35.00  [null]
+
+                128         7  single  30.00  Jessica
+
+                130         7  single  25.00  [null]
+
+            
+
+            Fetched 5 rows.
+
+  %/output  
+
+
+

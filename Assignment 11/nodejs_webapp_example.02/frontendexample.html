@@ -1,0 +1,74 @@
+<html>
+<!-- v.001 -->
+<head>
+	<title>Query</title>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8"> 
+
+</head>
+<body>
+
+<input type="text" id="dataNameTextField" > <br />
+
+<button type="button" onclick='getData();'>Get Data</button>
+
+<div id="response"></div>
+
+
+<script>
+
+
+function requestHandler(e) {
+   
+	if (this.readyState === 4) {
+		if (this.status === 200) {
+		  console.log(this.responseText);
+		  document.getElementById('response').innerHTML = this.responseText;
+		  
+		  // Convert string version of data back into code.
+		  var data = JSON.parse(this.responseText);
+		  
+		} else {
+		  console.error(this.statusText);
+		}
+	}
+};
+
+
+function errorHandler(e) {
+	console.error(this.statusText);
+};
+
+
+function getData()
+{
+	var dataName = document.getElementById('dataNameTextField').value;
+	
+	var theUrl = "http://" + document.location.host + "/json?command=get&operand=" + dataName;
+	
+	httpGet(theUrl);
+
+};
+
+
+function httpGet(theUrl)
+{
+    var xmlHttp = null;
+
+    xmlHttp = new XMLHttpRequest();
+    
+    xmlHttp.onload = requestHandler;
+    
+	xmlHttp.onerror = errorHandler;
+	
+    xmlHttp.open( "GET", theUrl, true );
+    
+    xmlHttp.send(null);
+
+}
+
+
+
+</script>
+
+</body>
+</html>

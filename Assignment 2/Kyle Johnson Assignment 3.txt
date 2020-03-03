@@ -1,0 +1,19 @@
+Kyle Johnson
+5:30 PM
+Monday
+9-10-18
+2.1) Data independence is the process of making different levels unaffected by changing lower levels.
+Data independence is important because it allows users that are not familiar with database management systems
+to interact with a system in a way that is easy to understand while still providing the lower levels the information needed
+to function.
+2.3) A data model is a collection of ideas for describing data, relationships between data, and limitations of data.
+The main types of data is: the structural part which organizes the data in an easy to understand/ orderly way.
+The manipulative part which is the operations that are able to be performed on the data.
+The integrity part which proves accuracy of data.
+2.4) The function of conceptual modeling is to provide a design or landscape that acts independently of everything else in
+the DBMS. This is important because the concept is what makes everyone happy. If the concept is not agreed upon before
+starting the process then different ideas are created and it becomes messy and overall bad.
+2.8) Client-server architecture is the architecture where many personal computers can connect to one Local Area Network 
+that then connects to a server often located on site to save costs. There's many advantages to this, as it allows the 
+integrity check to be taken easier and more consistently. It also allows connection to more databases easier compared to
+teleprocessing and file-server architecture.

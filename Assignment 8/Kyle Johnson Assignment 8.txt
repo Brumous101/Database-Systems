@@ -1,0 +1,41 @@
+Kyle Johnson
+ETCO 2601_51
+Prof. Kosan
+11-5-18
+4.2) Describe the purpose of each stage of the database application lifecycle.
+
+The stages for a database application lifecycle is as follows:
+Database planning- This involves planning how the stages of the lifecycle can be realized most efficiently and effectively
+System definition- This involves specifying the scope and boundaries of the database application, its users, and application areas.
+Requirements collection and analysis- This involves the collection and analysis of the requirements of users and application areas.
+Database design- This includes the conceptual, logical, and physical design of the database.
+DBMS selection- This involves selecting a suitable DBMS for the database application.
+Application design- This involves designing the user interface and the application programs that use and process the database.
+Prototyping- This involves building a working model of the database application, which allows the designers or users to visualize and evaluate how the final system will look and function.
+Implementation- This involves building a working model of the database application, which allows the designrs or users to visualize and evaluate how the final system will look and function.
+Data conversion and loading- This involves converting and loading data (and application programs) from the old system to the new system.
+Testing- The database application is tested for errors and validated against the requirements specified by the users.
+Operational Maintenance- The database application is fully implemented. The system is continuously monitored and maintained. When necessary, new requirements are incorporated into the database application through the preceding stages of life.
+
+4.3) Identify some of the techniques available to help document the users' requirements specification.
+
+One could: 
+Hold interviews and ask about what the user is wanting out of the system.
+Attempt to aquire data sheets that are used.
+Work at the site to see what the process is like.
+Analyze the current system in place and listen the feedback issues with it.
+
+4.7) Outline a procedure for selecting a DBMS.
+
+Define Terms of Reference of study
+Shortlist two or three products
+Evaluate products
+Recommend selection and produce report.
+
+4.11) Assume that you are responsible for selecting a DBMS product for Wellmeadows Hospital case study. 
+Describe the process of evaluating and selecting the best DBMS product
+
+Define Terms of Reference of study
+Shortlist two or three products
+Evaluate products
+Recommend selection and produce report.

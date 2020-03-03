@@ -1,0 +1,12 @@
+1) Obtain a student account on http://bitbucket.org.
+http://blog.bitbucket.org/2011/04/01/free-unlimited-user-source-code-hosting-for-university-students/
+
+2) Come up with an idea for a database-driven web application that one or more people will use.
+
+3) Use information from chapter 4 (see Fig. 4.1 p.114) when you design your application.
+
+4) Develop your application using HTML and JavaScript. Do not use an SQL database for this version of the application. Store the data in the application itself. Store the source code of the application in a git repository (http://en.wikipedia.org/wiki/Git_(software)) on Bitbucket.
+
+5) Place your web application on a server that is accessible from the Internet when it is finished. Bitbucket can be used to host html files.
+
+When you have completed this assignment, submit the URL of your web application as a text submission below.

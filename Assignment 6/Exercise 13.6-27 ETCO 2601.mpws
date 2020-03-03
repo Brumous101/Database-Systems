@@ -1,0 +1,503 @@
+Simple queries
+List full details of all hotels.
+
+%sql,title="Exercise 13.7",input="hotel"
+
+select *
+from Hotel;
+
+%/sql
+
+    %output,mpversion=".257",preserve="false"
+      HOTEL_NO  NAME       ADDRESS
+
+      --------  ---------  --------
+
+             1  Regal      London
+
+             2  Empire     London
+
+             3  Imperial   Glasgow
+
+             4  Holiday    Glasgow
+
+             5  Regal      Aberdeen
+
+             6  Quick      London
+
+             7  Grosvenor  London
+
+      Fetched 7 rows.
+.   %/output
+
+Simple queries
+List full details of all hotels in London.
+
+%sql,title="Exercise 13.8",input="hotel"
+
+select *
+from Hotel
+where Address = 'London';
+
+%/sql
+
+    %output,mpversion=".257",preserve="false"
+      HOTEL_NO  NAME       ADDRESS
+
+      --------  ---------  -------
+
+             1  Regal      London
+
+             2  Empire     London
+
+             6  Quick      London
+
+             7  Grosvenor  London
+
+      Fetched 4 rows.
+.   %/output
+
+Simple queries
+List the names and addresses of all guests in London, alphabetically ordered by name.
+
+%sql,title="Exercise 13.9",input="hotel"
+
+select Name, Address 
+from Guest
+where Address = 'London'
+order by Name;
+
+%/sql
+
+    %output,mpversion=".257",preserve="false"
+      NAME   ADDRESS
+
+      -----  -------
+
+      Chris  London
+
+      John   London
+
+      Mike   London
+
+      Fetched 3 rows.
+.   %/output
+
+Simple queries
+List all double or family rooms with a price below 40 per night, in ascending order of price.
+
+%sql,title="Exercise 13.10",input="hotel"
+
+select Room_No, Hotel_No, Type, Price
+from Room
+where price < 40  AND (type = 'double' OR type = 'family')
+order by price;
+
+%/sql
+
+    %output,mpversion=".257",preserve="false"
+      ROOM_NO  HOTEL_NO  TYPE    PRICE
+
+      -------  --------  ------  -----
+
+          126         1  family  27.00
+
+          123         7  double  35.00
+
+          128         3  family  35.00
+
+      Fetched 3 rows.
+.   %/output
+
+Simple queries
+List the bookings for which no date_to has been specified.
+
+%sql,title="Exercise 13.11",input="hotel"
+
+select *
+from Booking
+where Date_To IS NULL;
+
+%/sql
+
+    %output,mpversion=".257",preserve="false"
+      HOTEL_NO  GUEST_NO  DATE_FROM            DATE_TO  ROOM_NO
+
+      --------  --------  -------------------  -------  -------
+
+             1        10  2013-10-11 00:00:00               123
+
+             1        50  2013-08-03 00:00:00               131
+
+             3        70  2013-08-04 00:00:00               122
+
+             4        20  2013-08-08 00:00:00               121
+
+             4        20  2013-08-09 00:00:00               123
+
+             4        30  2013-10-09 00:00:00               121
+
+             7        60  2013-10-11 00:00:00               126
+
+      Fetched 7 rows.
+.   %/output
+
+Aggregate functions
+How many hotels are there?
+
+%sql,title="Exercise 13.12",input="hotel"
+
+select Count(Hotel_No)
+from Hotel;
+
+%/sql
+
+    %output,mpversion=".257",preserve="false"
+            7
+.   %/output
+
+Aggregate functions
+What is the average price of a room?
+
+%sql,title="Exercise 13.13",input="hotel"
+
+select AVG(Price)
+from Room;
+
+%/sql
+
+    %output,mpversion=".257",preserve="false"
+      39.90
+.   %/output
+
+Aggregate functions
+What is the total revenue per night from all double rooms?
+
+%sql,title="Exercise 13.14",input="hotel"
+
+select Sum(Price)
+from Room
+where Type = 'double';
+
+%/sql
+
+    %output,mpversion=".257",preserve="false"
+            225.00
+.   %/output
+
+Aggregate functions
+How many different guests have made bookings for August?
+
+%sql,title="Exercise 13.15",input="hotel"
+
+select Count(distinct Guest_No)
+from Booking, Guest
+where Date_From between '2013-08-01' AND '2013-08-31' AND (Date_To between '2013-08-01' AND '2013-08-31');
+
+%/sql
+
+    %output,mpversion=".257",preserve="false"
+      6
+.   %/output
+
+Subqueries and joins
+List the price and type of all rooms at the Grosvenor Hotel
+
+%sql,title="Exercise 13.16",input="hotel"
+
+SELECT Type,Price 
+from Room INNER JOIN Hotel on Room.Hotel_No = Hotel.Hotel_No
+where Hotel.Name = 'Grosvenor';
+
+%/sql
+
+    %output,mpversion=".257",preserve="false"
+      
+.   %/output
+
+    %output,mpversion=".257",preserve="false"
+      
+.   %/output
+
+Subqueries and joins
+List all guests currently staying at the Grosvenor Hotel.
+
+%sql,title="Exercise 13.17",input="hotel"
+
+select *
+from Guest
+where Guest_No =
+    (select Booking.Guest_No
+    from Booking
+    where Current_Date >= Date_From and Date_To is null and Booking.Hotel_No =
+        (select Hotel_No
+        from Hotel
+        where Hotel.Name = 'Grosvenor'));
+        
+        
+   
+
+%/sql
+
+    %output,mpversion=".257",preserve="false"
+      GUEST_NO  NAME  ADDRESS
+
+      --------  ----  -------
+
+            60  Mary  Glasgow
+.   %/output
+
+Subqueries and joins
+List the details of all rooms at the Grosvenor Hotel, 
+including the name of the guest staying in the room, if the room is occupied.
+
+%sql,title="Exercise 13.18",input="hotel"
+
+select Room.*, Guest_Name
+from Room Left Join
+    (select Guest.Guest_No,Guest.name as Guest_Name,Booking.Room_No as Room_Number
+    from Booking Left Join Guest on Guest.Guest_No=Booking.Guest_No
+    where Booking.Hotel_No=
+        (select Hotel_No
+        from Hotel
+        where Name = 'Grosvenor')
+        and Date_From <= Current_Date and Current_Date >= Date_To)
+        on Room.Room_No = Room_Number
+        Where Room.Hotel_No =
+            (select Hotel_No
+            from Hotel
+            where Name = 'Grosvenor');
+
+%/sql
+
+    %output,mpversion=".257",preserve="false"
+      ROOM_NO  HOTEL_NO  TYPE    PRICE  GUEST_NAME
+
+      -------  --------  ------  -----  ----------
+
+          121         7  double  50.00  Mary
+
+          122         7  family  40.00  [null]
+
+          123         7  double  35.00  Mary
+
+          130         7  single  25.00  [null]
+
+      Fetched 4 rows.
+.   %/output
+
+Subqueries and joins
+What is the total income from bookings for the Grosvenor Hotel today?
+
+%sql,title="Exercise 13.19",input="hotel"
+
+select Sum(Price)
+from Room Left Join
+    (select Guest.Guest_No,Guest.name as Guest_Name,Booking.Room_No as Room_Number
+    from Booking Left Join Guest on Guest.Guest_No=Booking.Guest_No
+    where Booking.Hotel_No=
+        (select Hotel_No
+        from Hotel
+        where Name = 'Grosvenor'))
+        on Room.Room_No = Room_Number
+        Where Room.Hotel_No =
+            (select Hotel_No
+            from Hotel
+            where Name = 'Grosvenor');
+
+%/sql
+
+    %output,mpversion=".257",preserve="false"
+      150.00
+.   %/output
+
+Subqueries and joins
+List the rooms that are currently unoccupied at the Grosvenor Hotel.
+
+%sql,title="Exercise 13.20",input="hotel"
+
+select Room.Hotel_No, Room.Room_No, Room.Type, Room.Price
+from Room, Hotel
+where Room.Hotel_No = Hotel.Hotel_No and Hotel.Name = 'Grosvenor' and Room.Room_No NOT IN
+    (select Room_No
+    from Booking, Hotel
+    where (Date_From < Current_Date and Date_To < Current_Date) and Booking.Hotel_No = Hotel.Hotel_No
+    and Hotel.Name = 'Grosvenor');
+
+%/sql
+
+    %output,mpversion=".257",preserve="false"
+      HOTEL_NO  ROOM_NO  TYPE    PRICE
+
+      --------  -------  ------  -----
+
+             7      122  family  40.00
+
+             7      130  single  25.00
+
+      Fetched 2 rows.
+.   %/output
+
+Subqueries and joins
+What is the lost income from unoccupied rooms at the Grosvenor Hotel?
+
+%sql,title="Exercise 13.21",input="hotel"
+
+select Sum(Price)
+from Room, Hotel
+where Room.Hotel_No = Hotel.Hotel_No and Hotel.Name = 'Grosvenor' and Room.Room_No NOT IN
+    (select Room_No
+    from Booking, Hotel
+    where (Date_From < Current_Date and Date_To < Current_Date) and Booking.Hotel_No = Hotel.Hotel_No
+    and Hotel.Name = 'Grosvenor');
+
+%/sql
+
+    %output,mpversion=".257",preserve="false"
+      65.00
+.   %/output
+
+Grouping
+List the number of rooms in each hotel.
+
+%sql,title="Exercise 13.22",input="hotel"
+
+select Hotel_No, Count(Room_No) as Number_of_Rooms
+from Room
+group by Hotel_No;
+
+%/sql
+
+    %output,mpversion=".257",preserve="false"
+      HOTEL_NO  NUMBER_OF_ROOMS
+
+      --------  ---------------
+
+             7                4
+
+             3                2
+
+             4                1
+
+             1                1
+
+             2                2
+
+             6                1
+
+      Fetched 6 rows.
+.   %/output
+
+Grouping
+List the number of rooms in each hotel in London.
+
+%sql,title="Exercise 13.23",input="hotel"
+
+select Room.Hotel_No, Hotel.Name as Hotels_in_London, Count(Room_No) as Number_of_Rooms
+from Room, Hotel
+where Room.Hotel_No = Hotel.Hotel_No and Hotel.Address = 'London'
+group by Room.Hotel_No, Hotel.Name;
+
+%/sql
+
+    %output,mpversion=".257",preserve="false"
+      HOTEL_NO  HOTELS_IN_LONDON  NUMBER_OF_ROOMS
+
+      --------  ----------------  ---------------
+
+             7  Grosvenor                       4
+
+             1  Regal                           1
+
+             2  Empire                          2
+
+             6  Quick                           1
+
+      Fetched 4 rows.
+.   %/output
+
+Grouping
+What is the average number of bookings in August?
+
+%sql,title="Exercise 13.24",input="hotel"
+
+select Hotel_No, Count(Hotel_No) as Number_of_Bookings, (Count(Hotel_No)/31) as Average_Number_of_Bookings
+from Booking
+where Date_From <= '2013-08-31' and Date_To >= '2013-08-01'
+Group by Hotel_No;
+
+%/sql
+
+    %output,mpversion=".257",preserve="false"
+      HOTEL_NO  NUMBER_OF_BOOKINGS  AVERAGE_NUMBER_OF_BOOKINGS
+
+      --------  ------------------  --------------------------
+
+             1                   3                           0
+
+             2                   1                           0
+
+             3                   5                           0
+
+             4                   2                           0
+
+             5                   3                           0
+
+             6                   2                           0
+
+      Fetched 6 rows.
+.   %/output
+
+Grouping
+What is the most commonly booked room type for each hotel in London?
+
+%sql,title="Exercise 13.25",input="hotel"
+
+select Hotel_No, Type, MAX(sumType) as Amount_Booked
+from
+    (select Hotel_No, Type, Count(Type) as sumType
+    from Booking b, Hotel h, Room r
+    where b.Room_No = r.Room_No and r.Hotel_No = b.Hotel_no and b.Hotel_No = h.Hotel_No and Address = 'London'
+    Group By Hotel_No, Type)
+Group By Hotel_No, Type;
+
+%/sql
+
+    %output,mpversion=".257",preserve="false"
+      HOTEL_NO  TYPE    AMOUNT_BOOKED
+
+      --------  ------  -------------
+
+             2  double              1
+
+             7  double              2
+
+      Fetched 2 rows.
+.   %/output
+
+Grouping
+What is the lost income from unoccupied rooms at each hotel today?
+
+%sql,title="Exercise 13.26",input="hotel"
+
+select Hotel_No, Sum(Price)
+from Room, Hotel
+where Room.Hotel_No = Hotel.Hotel_No and Room.Room_No NOT IN
+    (select Room_No
+    from Booking, Hotel
+    where (Date_From < Current_Date and Date_To < Current_Date) and Booking.Hotel_No = Hotel.Hotel_No)
+Group by Hotel_No;
+
+%/sql
+
+    %output,mpversion=".257",preserve="false"
+      HOTEL_NO  C2
+
+      --------  --
+
+      Fetched 0 rows.
+.   %/output
+
+
+
+

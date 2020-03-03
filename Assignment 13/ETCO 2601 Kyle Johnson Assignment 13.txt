@@ -1,0 +1,31 @@
+Kyle Johnson
+ETCO 2601
+5:30 PM
+12/8/18
+
+7.5)
+	The main objective of a conceptual database is to meet the ends and goals of the person or persons using the database.
+7.6)
+	A user view represents a particular interface that a group of people would use. Some ways of identifying user views
+would be taking a look at the setup that is currently in use and prototyping what you think the userview should look like
+based on the issues with the previous system until it is what the group wants out of the DBMS. Another way is to draw on paper
+what the interface would look like and with each entry show what would happen with another piece of paper. This way would
+show clarity from the user before programming something totally different than what is desired.
+7.7)
+	1.) Identify entity types
+	2.) Identify relationship types.
+	3.) Identify and associate attributes with entity or relationship types.
+	4.) Determine attribute domains.
+	5.) Determine candidate and primary key attributes.
+	6.) Specialize/generalize entity types (optional step).
+	7.) Draw Entity-Relationship diagram.
+	8.) Review local conceptual data model with user.
+7.8)
+	The purpose of specialization of a database is to make it as specific as possible. The pros of this is it makes it more difficult the deeper you
+go into the specification to confuse it with another thing. The cons of this is it becomes redundent and when having to merge databases it becomes 
+incredibly difficult.
+	The purpose of generalization is to simplify the information in a database. The pros of this is it is easy to understand. The cons of this
+is it becomes easy to make anomalies in the databases and make errors.
+	This becomes an issue either way when merging information from two different databases as some terms may mean different things.
+
+

@@ -1,0 +1,13 @@
+Obtain a unique port number from the teacher.
+Install NodeJS on your laptop computer.
+Rewrite the web application you developed in assignment 7 to use a small NodeJS server program to hold your application's data.
+Use JavaScript running in a browser to access this data.
+Develop the application on your laptop.
+When your application is finished, upload it to the p1.ssucet.org server and use the "screen" program to run it in the background using the unique port number you were given.
+"screen" utility.
+Type "screen" to start a new screen session.
+Run your server using "nodejs nodedataserver.js"
+Type "<crtl>A" then "D" to detach from the screen session.
+Type "screen -r" to resume the screen session.
+While in a screen session, typing "exit" will exit out of the screen session.
+Place the URL of your running application into this assignment using the "Write Submission" button, and then submit it.

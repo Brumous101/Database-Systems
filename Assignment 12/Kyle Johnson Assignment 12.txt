@@ -1,0 +1,27 @@
+Kyle Johnson
+ETCO 2601
+5:30 PM
+11/29/18
+
+6.7) 
+	An insertion anomaly would be creating a new patient in the system as there would need to be a Staff No
+which is irrelevant to a new patient registering to the practice and an Appointment Date/ Time as they
+may not be there for an Appointment at that time but are registering for a future date. 
+
+	A deletion anomaly would occur when the deletion of a row containing a particular patient is deleted.
+This would cause the dentist to move onto the next patient and the registration office to schedule other patients
+during this already alloted time slot.
+
+	An modification anomaly would occur when a patient goes back to the dentist and instead of getting a routine
+cleaning the dentist pulls out a molar from the patient's mouth because while the patient was updated in the database
+the Surgery No was not.
+
+6.8)
+	To start the first normal form the table shown all of the columns and rows that intersect need to present one value. In
+the table the only column that does not present this is the Appointment Date Time column which needs to be broken into
+two separate columns. Next, the second normal form has an analysis of what can be used as primary keys in
+different tables. In the example the Staff No, Patient No/5 would be the primary keys.
+The Third Normal Form would be to create new tables to exclude redundancy in data so Staff relation would contain
+Staff No, Staff Name and the Patient relation would contain the Pat No, and Pat Name and then some sort of appointment number
+should be created as a primary key for the appointment relation. Finally, the relations are in BCNF as all the determinants are
+would already be candidate keys through the normalization process of this example.
